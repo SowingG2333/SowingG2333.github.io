@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>这是一个网络请求</title>
+    <style>
+        body {
+            background-color: burlywood;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="user-list"></div>
+
+    <script>document.addEventListener("DOMContentLoaded", function () {
+            const userlist = document.getElementById("user-list");
+
+            fetch("https://631333b8a8d3f673ffc6500b.mockapi.io/users")
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(user => {
+                        const userdiv = document.createElement("div");
+                        const avatarimg = document.createElement("img");
+                        const userinf1 = document.createElement("span");
+                        const userinf2 = document.createElement("span");
+                        userdiv.appendChild(avatarimg);
+                        userdiv.appendChild(userinf1);
+                        userdiv.appendChild(userinf2);
+                        userlist.appendChild(userdiv);
+                        userdiv.style.border = "3px solid black";
+                        userdiv.style.width = "100%";
+                        userdiv.style.height = "130px";
+                        userdiv.style.borderRadius = "30px";
+                        userdiv.style.backgroundColor = "brown";
+                        userdiv.style.boxShadow = "3px 3px 5px black";
+                        avatarimg.src = user.avatar;
+                        avatarimg.style.borderRadius = "20px";
+                        avatarimg.style.boxShadow = "2px 2px 3px black";
+                        userinf1.style.margin = "10px";
+                        userinf1.style.verticalAlign = "top";
+                        userinf1.style.fontSize = "25px";
+                        userinf1.style.fontFamily = "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif";
+                        userinf2.style.margin = "10px";
+                        userinf2.style.fontSize = "15px";
+                        userinf2.style.fontFamily = "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif";
+                        userinf1.textContent = `Name: ${user.name}`;
+                        userinf2.textContent = `createdAt:${user.createdAt} ID:${user.id} email:${user.email}`;
+                        console.log("加载完成！");
+                    });
+                })
+                .catch(error => console.error("Error:", error));
+        });
+        console.log("正在加载...");
+    </script>
+</body>
+
+</html>

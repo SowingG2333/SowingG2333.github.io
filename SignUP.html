@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册页面</title>
+    <style>
+        body {
+            background-image: url(background.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .LogInIndex {
+            width: 1000px;
+            height: 700px;
+            background-color: rgba(18, 115, 159, 0.669);
+            border-radius: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 10px 10px 0 rgba(13, 67, 128, 0.696)
+        }
+
+        .LogInHeadline1 {
+            width: 1000px;
+            height: 50px;
+            text-align: center;
+        }
+
+        .LogInHeadline2 {
+            width: 800px;
+            height: 500px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.58);
+            border-radius: 70px;
+            position: absolute;
+            left: 8%;
+        }
+
+        .LogInHeadline3 {
+            width: 300px;
+            height: 450px;
+            position: absolute;
+            left: 475px;
+            top: 40px;
+            background-image: url(background2.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 70px;
+            box-shadow: 10px 10px 0 rgba(18, 114, 159, 0.696);
+        }
+
+        form {
+            position: absolute;
+            top: 15%;
+        }
+
+        h1 {
+            color: midnightblue;
+        }
+
+        h2 {
+            font-size: 50px;
+        }
+
+        input {
+            border: none;
+        }
+
+        label {
+            font-size: 20px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: steelblue
+        }
+
+        .denglu1 {
+            width: 200px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.804);
+            box-shadow: 5px 5px 0 gray;
+        }
+
+        .denglu2 {
+            position: absolute;
+            left: 20px;
+            width: 100px;
+            height: 60px;
+            background-color: cadetblue;
+            font-size: 25px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            border-radius: 10%;
+            border: none;
+            box-shadow: 3px 3px 0 grey;
+            color: gold;
+        }
+
+        a {
+            position: absolute;
+            left: 150px;
+            font-size: 15px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: rgb(61, 191, 104);
+        }
+
+        @media (min-width: 1200px) and (max-width: 1530px) {
+            body {
+                background-image: url(backgroundmedia.png);
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
+        }
+
+        @media (min-width: 700px) and (max-width: 1200px) {
+            body {
+                background-image: url(backgroundmedia.png);
+                background-repeat: no-repeat;
+                background-size: auto;
+            }
+
+            .LogInIndex {
+                width: 400px;
+                height: 500px;
+                background-color: rgba(18, 115, 159, 0.669);
+                border-radius: 100px;
+                position: absolute;
+                top: 30%;
+                left: 25%;
+                transform: translate(-50%, -50%);
+                box-shadow: 10px 10px 0 rgba(13, 67, 128, 0.696)
+            }
+
+            .LogInHeadline1 {
+                width: 400px;
+                height: 50px;
+                text-align: center;
+                font-size: 11px;
+                padding: 3px;
+
+            }
+
+            .LogInHeadline2 {
+                width: 250px;
+                height: 300px;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.58);
+                border-radius: 70px;
+                position: absolute;
+                left: 15%;
+                bottom: 20%;
+            }
+
+            .LogInHeadline3 {
+              display: none;
+            }
+
+            h2 {
+                margin: 10px;
+            }
+
+        }
+
+
+        @media (max-width:700px) {
+            body {
+                background-image: url(backgroundmediamini.png);
+                background-repeat: no-repeat;
+                background-size: auto;
+            }
+
+
+            .LogInIndex {
+                width: 300px;
+                height: 500px;
+                background-color: rgba(18, 115, 159, 0.669);
+                border-radius: 30px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                box-shadow: 10px 10px 0 rgba(13, 67, 128, 0.696)
+            }
+
+            .LogInHeadline1 {
+                width: 250px;
+                height: 50px;
+                text-align: center;
+                font-size: 8px;
+                padding: 2px;
+            }
+
+            .LogInHeadline2 {
+                width: 200px;
+                height: 350px;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.58);
+                border-radius: 70px;
+                position: absolute;
+                left: 10%;
+            }
+
+            .LogInHeadline3{
+                display: none;
+            }
+
+        }
+    </style>
+</head>
+
+<body class="body">
+    <div class="LogInIndex">
+        <div class="LogInHeadline1">
+            <h1>鲜葱还是二次元</h1>
+        </div>
+        <div class="LogInHeadline2">
+            <form method="post">
+                <h2>Sign Up</h2>
+                <label for="username">UserName</label>
+                <input type="text" id="username" name="username" class="denglu1" id="zhanghao"><br><br><br>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="denglu1" id="mima"><br><br><br>
+                <input type="submit" value="启动！" class="denglu2" id="qidong">
+            </form>
+            <div class="LogInHeadline3"></div>
+        </div>
+    </div>
+        <script>
+            function passwordsaving() {
+                const zhanghao = document.getElementById("username").value;
+                const mima = document.getElementById("password").value;
+                localStorage.setItem("zhanghao", zhanghao);
+                localStorage.setItem("mima", mima);
+                alert("注册成功！");
+                window.location.href = "./index.html"
+            }
+            var btn = document.getElementById("qidong");
+            btn.onclick = function (e) {
+                e.preventDefault();
+                passwordsaving();
+            }  
+        </script>
+
+
+        </script>
+</body>
+
+</html>
