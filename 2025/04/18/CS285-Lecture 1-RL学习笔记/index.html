@@ -35,7 +35,7 @@
     <script class="keep-theme-configurations">
     const KEEP = window.KEEP || {}
     KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en","path":"search.json"}
-    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"SowingG's Web","author":"SowingG","avatar":"/images/avatar.jpeg","logo":"/images/logo.png","favicon":"/images/logo.png","mode":"light"},"menu":{"home":"/","archives":"/archives","tags":"/tags","about":"/about"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"Keep Sowing | Keep Growing","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/SowingG2333","weixin":null,"qq":null,"weibo":null,"zhihu":"https://www.zhihu.com/people/samura1-43","twitter":null,"x":null,"facebook":null,"email":"donghangduan@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":false,"tag":true,"post_datetime":"created"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":false},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null,"icon":null},"img_align":"left"},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"local_search":{"enable":true,"preload":false},"comment":{"enable":true,"use":"gitalk","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":"SowingG2333","repository":"my-gitalk","client_id":"Ov23lidbgKN82b1SapGQ","client_secret":"958f455cfaad32426c42c3f8db36ec3cb3fe2b00"},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2025,"word_count":true,"site_deploy":{"enable":true,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"SowingG's Web","author":"SowingG","avatar":"/images/avatar.jpeg","logo":"/images/logo.png","favicon":"/images/logo.png","mode":"light"},"menu":{"home":"/","archives":"/archives","tags":"/tags","about":"/about"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"Keep Sowing | Keep Growing","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/SowingG2333","weixin":null,"qq":null,"weibo":null,"zhihu":"https://www.zhihu.com/people/samura1-43","twitter":null,"x":null,"facebook":null,"email":"donghangduan@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":false,"tag":true,"post_datetime":"created"},"post":{"author_badge":{"enable":false,"level_badge":true,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":false},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null,"icon":null},"img_align":"left"},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":true,"site_uv":true,"site_pv":true,"page_pv":true}},"local_search":{"enable":true,"preload":false},"comment":{"enable":true,"use":"twikoo","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"twikoo":{"env_id":"https://my-vercel-sowingg2333s-projects.vercel.app","region":null,"version":"1.6.42"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2025,"word_count":true,"site_deploy":{"enable":true,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
     KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
     KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
     KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
@@ -498,11 +498,10 @@
         
             
 
-    <div class="gitalk-comment-container">
-        <div id="gitalk-container"></div>
-        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.css">
+    <div class="twikoo-container">
+        <div id="twikoo-comment"></div>
         <script data-pjax
-                src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"
+                src="//cdn.jsdelivr.net/npm/twikoo@1.6.42/dist/twikoo.all.min.js"
                 async
                 onerror="window.KeepCommentPlugin.loadFailHandle()"
         ></script>
@@ -510,39 +509,28 @@
                 async
                 onerror="window.KeepCommentPlugin.loadFailHandle()"
         >
-          window.KeepCommentPlugin.initGitalk = () => {
-            let gitalkPathname = decodeURI(location.pathname)
-            const gitalkPathnameLength = gitalkPathname.length
-            const gitalkPathnameMaxLength = 50
-            if (gitalkPathnameLength > gitalkPathnameMaxLength) {
-              gitalkPathname = gitalkPathname.substring(0, gitalkPathnameMaxLength - 3) + '...'
-            }
-
-            if (window?.Gitalk) {
-              new Gitalk({
-                clientID: 'Ov23lidbgKN82b1SapGQ',
-                clientSecret: '958f455cfaad32426c42c3f8db36ec3cb3fe2b00',
-                repo: 'my-gitalk',
-                owner: 'SowingG2333',
-                admin: 'SowingG2333',
-                id: gitalkPathname,
-                proxy: '',
-                language: 'en'
-              }).render('gitalk-container')
+          window.KeepCommentPlugin.initTwikoo = () => {
+            if (window?.twikoo) {
+              twikoo.init({
+                el: '#twikoo-comment',
+                envId: 'https://my-vercel-sowingg2333s-projects.vercel.app',
+                region: '',
+                lang: 'en' || 'zh-CN'
+              })
               window.KeepCommentPlugin.hideLoading()
             } else {
               setTimeout(() => {
-                window.KeepCommentPlugin.initGitalk()
+                window.KeepCommentPlugin.initTwikoo()
               }, 1000)
             }
           }
 
           if ('true' === 'true') {
             setTimeout(() => {
-              window.KeepCommentPlugin.initGitalk()
+              window.KeepCommentPlugin.initTwikoo()
             }, 1200)
           } else {
-            window.addEventListener('DOMContentLoaded', window.KeepCommentPlugin.initGitalk)
+            window.addEventListener('DOMContentLoaded', window.KeepCommentPlugin.initTwikoo)
           }
         </script>
     </div>
