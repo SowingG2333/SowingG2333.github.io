@@ -267,7 +267,7 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>716 Words</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>700 Words</span>
             </span>
         
         
@@ -300,7 +300,7 @@
 <li>语义网络（semantic network）：采用图谱表示深层次的语义知识，节点代表概念，边代表联系</li>
 </ul>
 </li>
-<li><strong>&#x3D;&#x3D;统计方法&#x3D;&#x3D;</strong><ul>
+<li><strong>统计方法</strong><ul>
 <li>HMMs（计算的是联合概率）：前向算法评估模型符合度、维特比算法寻找最佳路径、鲍姆-韦尔奇算法学习参数直至收敛（发射概率、状态转移概率和初始概率）</li>
 <li>CRFs（计算的是条件概率）：最大化训练数据的对数似然，梯度下降</li>
 <li>N-gram：第n个词语的生成依赖于前n-1个词语，基于markov</li>
@@ -314,7 +314,7 @@
 <h1 id="NLP任务"><a href="#NLP任务" class="headerlink" title="NLP任务"></a>NLP任务</h1><ol>
 <li>中文分词（CWS）</li>
 <li>子词切分：适用于处理词汇稀疏问题，即当遇到罕见词或未见过的新词时，能够通过已知的子词单位来理解或生成这些词汇，在合成词多的语言以及预训练中尤为重要<ul>
-<li>&#x3D;&#x3D;方法&#x3D;&#x3D;：Byte Pair Encoding (BPE)、WordPiece、Unigram、SentencePiece</li>
+<li>方法：Byte Pair Encoding (BPE)、WordPiece、Unigram、SentencePiece</li>
 </ul>
 </li>
 <li>词性标注</li>
@@ -329,13 +329,13 @@
 <li>词向量：VSM模型</li>
 <li>语言模型<ol>
 <li>N-gram</li>
-<li>&#x3D;&#x3D;Word2Vec&#x3D;&#x3D;：利用词在文本中的上下文信息来捕捉词之间的语义关系，从而使得语义相似或相关的词在向量空间中距离较近<ul>
+<li>Word2Vec：利用词在文本中的上下文信息来捕捉词之间的语义关系，从而使得语义相似或相关的词在向量空间中距离较近<ul>
 <li>连续词袋模型CBOW(Continuous Bag of Words)：根据目标词上下文中的词对应的词向量, 计算并输出目标词的向量表示</li>
 <li>Skip-Gram模型：利用目标词的向量表示计算上下文中的词向量</li>
 <li>实践验证CBOW适用于小型数据集, 而Skip-Gram在大型语料中表现更好</li>
 </ul>
 </li>
-<li>&#x3D;&#x3D;ELMo&#x3D;&#x3D;：首先在大型语料库上训练语言模型，得到词向量模型，然后在特定任务上对模型进行微调，得到更适合该任务的词向量，ELMo首次将预训练思想引入到词向量的生成中，使用双向LSTM结构，能够捕捉到词汇的上下文信息，生成更加丰富和准确的词向量表示</li>
+<li>ELMo：首先在大型语料库上训练语言模型，得到词向量模型，然后在特定任务上对模型进行微调，得到更适合该任务的词向量，ELMo首次将预训练思想引入到词向量的生成中，使用双向LSTM结构，能够捕捉到词汇的上下文信息，生成更加丰富和准确的词向量表示</li>
 </ol>
 </li>
 </ol>
@@ -598,7 +598,7 @@
             
                 <span class="count-item border-box word">
                     <span class="item-type border-box">Total words</span>
-                    <span class="item-value border-box word">876</span>
+                    <span class="item-value border-box word">860</span>
                 </span>
             
 
