@@ -9,7 +9,7 @@
     
     <title>
         
-            LLM.Tour | NLP.Base |
+            LLM Intro |
         
         SowingG&#39;s Web
     </title>
@@ -216,7 +216,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        LLM.Tour | NLP.Base
+                        LLM Intro
                     </div>
                 
 
@@ -242,7 +242,7 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2025-08-30 18:00:00</span>
+                <span class="datetime">2025-09-07 18:00:00</span>
             </span>
 
             
@@ -267,7 +267,7 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>696 Words</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>367 Words</span>
             </span>
         
         
@@ -290,53 +290,13 @@
                     
 
                     
-                         <p>“如果一台机器可以通过使用打字机成为对话的一部分，并且能够完全模仿人类，没有明显的差异，那么机器可以被认为是能够思考的。”</p>
-<h1 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h1><ol>
-<li>早期探索：图灵测试</li>
-<li>两大流派：符号主义和统计方法<ul>
-<li><strong>符号主义</strong>（symbolism）<ul>
-<li>概括：知识表示（符号、规则和逻辑结构）+推理（采用预设规则进行分析）</li>
-<li>专家系统：核心即为“if-then”的推理规则</li>
-<li>句法分析器（synaptic parser）：基于CFG生成句法树（parser tree）</li>
-<li>语义网络（semantic network）：采用图谱表示深层次的语义知识，节点代表概念，边代表联系</li>
-</ul>
-</li>
-<li><strong>统计方法</strong><ul>
-<li>HMMs（计算的是联合概率）：前向算法评估模型符合度、维特比算法寻找最佳路径、鲍姆-韦尔奇算法学习参数直至收敛（发射概率、状态转移概率和初始概率）</li>
-<li>CRFs（计算的是条件概率）：最大化训练数据的对数似然，梯度下降</li>
-<li>N-gram：第n个词语的生成依赖于前n-1个词语，基于markov</li>
-<li>传统ml算法：svm、决策树等</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>机器学习和深度学习</li>
-</ol>
-<h1 id="NLP任务"><a href="#NLP任务" class="headerlink" title="NLP任务"></a>NLP任务</h1><ol>
-<li>中文分词（CWS）</li>
-<li>子词切分：适用于处理词汇稀疏问题，即当遇到罕见词或未见过的新词时，能够通过已知的子词单位来理解或生成这些词汇，在合成词多的语言以及预训练中尤为重要<br> 方法：Byte Pair Encoding (BPE)、WordPiece、Unigram、SentencePiece</li>
-<li>词性标注</li>
-<li>文本分类</li>
-<li>实体识别</li>
-<li>关系抽取</li>
-<li>文本摘要：抽取式和生成式</li>
-<li>机器翻译</li>
-<li>自动问答：检索式、知识库和社区问答</li>
-</ol>
-<h1 id="文本表示"><a href="#文本表示" class="headerlink" title="文本表示"></a>文本表示</h1><ol>
-<li>词向量：VSM模型</li>
-<li>语言模型<ol>
-<li>N-gram</li>
-<li>Word2Vec：利用词在文本中的上下文信息来捕捉词之间的语义关系，从而使得语义相似或相关的词在向量空间中距离较近<ul>
-<li>连续词袋模型CBOW(Continuous Bag of Words)：根据目标词上下文中的词对应的词向量, 计算并输出目标词的向量表示</li>
-<li>Skip-Gram模型：利用目标词的向量表示计算上下文中的词向量</li>
-<li>实践验证CBOW适用于小型数据集, 而Skip-Gram在大型语料中表现更好</li>
-</ul>
-</li>
-<li>ELMo：首先在大型语料库上训练语言模型，得到词向量模型，然后在特定任务上对模型进行微调，得到更适合该任务的词向量，ELMo首次将预训练思想引入到词向量的生成中，使用双向LSTM结构，能够捕捉到词汇的上下文信息，生成更加丰富和准确的词向量表示</li>
-</ol>
-</li>
-</ol>
+                         <h2 id="从自学说起"><a href="#从自学说起" class="headerlink" title="从自学说起"></a>从自学说起</h2><p>此时是作者大三开学的第一周。</p>
+<p>在过去的两年大学生涯中，我通过自学学习了很多知识。从课内的数分、线代、模电和数电，到课外的深度学习、强化学习，一个比较常见的问题逐渐出现在主包的学习中，那就是遗忘。</p>
+<p>在大学的学习历程中，我们学习到的知识往往得不到高中那样做题式的巩固，而较早学习的知识如果长时间得不到使用，下一次见面可能就不是ex-xxfriend，而是complete stranger。</p>
+<p>落笔至此，已经是我第三次学习Transformer。因为作者在大学的研究方向是Federated Learning，而在我们领域内大部分都是基于一些小模型和小型CV数据集（MNIST, FMNIST, CIFAR-10）来做benchmark，所以对于大模型相关的知识用的很少，总是学了又忘。在FL做出一些成果之后，主包准备转向LLM来做一些新的research。借此机会，我也想记录下本人的学习历程和基于一些网络课程的常见Q&amp;A，希望自己能够坚持下去✍️</p>
+<p>本系列名为LLM-Intro，代表着成为LLM researcher的必经之路。</p>
+<p>参考资料：Happy-LLM</p>
+<p>目前计划内容如下（更新截止2025&#x2F;9&#x2F;7）<br>[ ]  I: 从零开始搭建一个Transformer (Writing)<br>[ ]  II: LLM的预训练 (Coming soon)</p>
 
                     
                 </div>
@@ -347,11 +307,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                LLM.Tour | NLP.Base
+                LLM Intro
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2025/08/30/LLM_Tour_NLP_Base/
+                2025/09/07/LLM-Intro/
             </div>
         </div>
 
@@ -367,7 +327,7 @@
                 <div class="type">
                     Published
                 </div>
-                <div class="content">2025-08-30 18:00</div>
+                <div class="content">2025-09-07 18:00</div>
             </div>
 
 
@@ -554,7 +514,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="nav-text">发展历程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NLP%E4%BB%BB%E5%8A%A1"><span class="nav-text">NLP任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA"><span class="nav-text">文本表示</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%87%AA%E5%AD%A6%E8%AF%B4%E8%B5%B7"><span class="nav-text">从自学说起</span></a></li></ol>
     </div>
 </div>
 
@@ -596,7 +556,7 @@
             
                 <span class="count-item border-box word">
                     <span class="item-type border-box">Total words</span>
-                    <span class="item-value border-box word">856</span>
+                    <span class="item-value border-box word">527</span>
                 </span>
             
 
@@ -749,7 +709,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="nav-text">发展历程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NLP%E4%BB%BB%E5%8A%A1"><span class="nav-text">NLP任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E8%A1%A8%E7%A4%BA"><span class="nav-text">文本表示</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E8%87%AA%E5%AD%A6%E8%AF%B4%E8%B5%B7"><span class="nav-text">从自学说起</span></a></li></ol>
     </div>
 </div>
 
