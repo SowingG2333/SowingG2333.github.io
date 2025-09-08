@@ -315,7 +315,7 @@
 /
 警察-男人=女警），就能够通过向量很好地表征自然语言的信息，而从token到语义向量的这个过程我们可以通过机器学习来完成。</p>
 <p>我们先将token转化为独热编码的形式，以便于进行矩阵运算，这个时候我们的输入就变成了这样一个<code>[3, 3]</code>的矩阵：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>] [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], </span><br><span class="line"> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line"> [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]]</span><br></pre></td></tr></table></figure>
 <p>我们用X来表示当前的输入，X会与一个名为嵌入矩阵（embedding）的矩阵<span
 class="math inline"><em>W</em><sub><em>e</em><em>m</em><em>b</em><em>e</em><em>d</em></sub></span>相乘，这个矩阵通过反向传播来调整参数，从而使得X能够变成包含语义信息的矩阵。</p>
 <p>嵌入矩阵的大小为<code>[vocab_size, d_m]</code>，
@@ -326,7 +326,7 @@ class="math inline"><em>X</em><em>W</em><sub><em>e</em><em>m</em><em>b</em><em>e
 <p>此时的<span
 class="math inline"><em>H</em></span>正是我们真正输入transformer的矩阵，其大小为<code>[seq_l, d_m]</code>
 ：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">0.2</span>], [<span class="number">0.3</span>, -<span class="number">0.4</span>, <span class="number">0.1</span>], [<span class="number">0.3</span>, <span class="number">0.2</span>, <span class="number">0.9</span>]]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">0.2</span>], </span><br><span class="line"> [<span class="number">0.3</span>, -<span class="number">0.4</span>, <span class="number">0.1</span>], </span><br><span class="line"> [<span class="number">0.3</span>, <span class="number">0.2</span>, <span class="number">0.9</span>]]</span><br></pre></td></tr></table></figure>
 <p>由于transformer的注意力机制无法像RNN那样自然地关注到序列的位置信息，所以这里需要对每个token向量加上一个positional
 code，具体公式如下：</p>
 <p><span class="math inline">$PE_{(pos, 2i)} =
