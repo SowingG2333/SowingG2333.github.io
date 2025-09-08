@@ -270,7 +270,7 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.7k Words</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.6k Words</span>
             </span>
         
         
@@ -293,103 +293,147 @@
                     
 
                     
-                         <h1 id="从零搭建一个Transformer"><a href="#从零搭建一个Transformer" class="headerlink" title="从零搭建一个Transformer"></a>从零搭建一个Transformer</h1><h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><ul>
+                         <h1 id="从零搭建一个transformer">从零搭建一个Transformer</h1>
+<h2 id="前置知识">前置知识</h2>
+<ul>
 <li>深度学习基础</li>
 <li>线性代数</li>
 <li>概率论与数理统计</li>
 </ul>
-<h2 id="I-从零运行一个Transformer"><a href="#I-从零运行一个Transformer" class="headerlink" title="I. 从零运行一个Transformer"></a>I. 从零运行一个Transformer</h2><h3 id="Encoder部分"><a href="#Encoder部分" class="headerlink" title="Encoder部分"></a>Encoder部分</h3><p>假设我们输入transformer的是<code>“我爱学习”</code>这一句话。</p>
+<h2 id="i.-从零运行一个transformer">I. 从零运行一个Transformer</h2>
+<h3 id="encoder部分">Encoder部分</h3>
+<p>假设我们输入transformer的是<code>“我爱学习”</code>这一句话。</p>
 <p>这句话首先会经过一个tokenizer（分词器），变成<code>“我，爱，学习”</code>这三个词语，也就是我们所说的token。</p>
 <p>我们会构建一个词表，将每个token映射到对应的id，我们这里假设词表仅有上文三个词：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;“我”: <span class="number">1</span>, “爱”:<span class="number">2</span>, “学习”: <span class="number">3</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样，我们的输入就可以表征为一个序列长度<code>seq_l</code>为3一维张量 <code>[1, 2, 3]</code> 。</p>
-<p>虽然我们能够把自然语言通过这种方式数学化地表示出来，但是却损失了本来语句中包含的信息（1, 2, 3这三个数字之间并没有包含任何语义和语法上的信息和关联），所以我们需要用更复杂的方式来表征我们的token，而这种方式就是更长的向量。</p>
-<p>我们如果能够让语义相近的词在向量空间中距离更近（“番茄”和“西红柿”），以及多个语义相叠加或排除能够得到一个新的语义（女人+警察&#x3D;女警 &#x2F; 警察-男人&#x3D;女警），就能够通过向量很好地表征自然语言的信息，而从token到语义向量的这个过程我们可以通过机器学习来完成。</p>
+<p>这样，我们的输入就可以表征为一个序列长度<code>seq_l</code>为3一维张量
+<code>[1, 2, 3]</code> 。</p>
+<p>虽然我们能够把自然语言通过这种方式数学化地表示出来，但是却损失了本来语句中包含的信息（1,
+2,
+3这三个数字之间并没有包含任何语义和语法上的信息和关联），所以我们需要用更复杂的方式来表征我们的token，而这种方式就是更长的向量。</p>
+<p>我们如果能够让语义相近的词在向量空间中距离更近（“番茄”和“西红柿”），以及多个语义相叠加或排除能够得到一个新的语义（女人+警察=女警
+/
+警察-男人=女警），就能够通过向量很好地表征自然语言的信息，而从token到语义向量的这个过程我们可以通过机器学习来完成。</p>
 <p>我们先将token转化为独热编码的形式，以便于进行矩阵运算，这个时候我们的输入就变成了这样一个<code>[3, 3]</code>的矩阵：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>] [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]]</span><br></pre></td></tr></table></figure>
-
-<p>我们用X来表示当前的输入，X会与一个名为嵌入矩阵（embedding）的矩阵$W_{embed}$相乘，这个矩阵通过反向传播来调整参数，从而使得X能够变成包含语义信息的矩阵。</p>
-<p>嵌入矩阵的大小为<code>[vocab_size, d_m]</code>， 其中<code>vocab_size</code>是指词表大小（在我们的例子中为3），而<code>d_m</code>则是后续的模型参数大小，我们假设模型参数大小为9，则此时的嵌入矩阵大小为<code>[3, 9]</code></p>
+<p>我们用X来表示当前的输入，X会与一个名为嵌入矩阵（embedding）的矩阵<span
+class="math inline"><em>W</em><sub><em>e</em><em>m</em><em>b</em><em>e</em><em>d</em></sub></span>相乘，这个矩阵通过反向传播来调整参数，从而使得X能够变成包含语义信息的矩阵。</p>
+<p>嵌入矩阵的大小为<code>[vocab_size, d_m]</code>，
+其中<code>vocab_size</code>是指词表大小（在我们的例子中为3），而<code>d_m</code>则是后续的模型参数大小，我们假设模型参数大小为9，则此时的嵌入矩阵大小为<code>[3, 9]</code></p>
 <p>经过下列运算我们得到：</p>
-<p>$$<br>XW_{embed} &#x3D; H<br>$$</p>
-<p>此时的$H$正是我们真正输入transformer的矩阵，其大小为<code>[seq_l, d_m]</code> ：</p>
+<p><span
+class="math inline"><em>X</em><em>W</em><sub><em>e</em><em>m</em><em>b</em><em>e</em><em>d</em></sub> = <em>H</em></span></p>
+<p>此时的<span
+class="math inline"><em>H</em></span>正是我们真正输入transformer的矩阵，其大小为<code>[seq_l, d_m]</code>
+：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">0.1</span>, <span class="number">0.5</span>, <span class="number">0.2</span>], [<span class="number">0.3</span>, -<span class="number">0.4</span>, <span class="number">0.1</span>], [<span class="number">0.3</span>, <span class="number">0.2</span>, <span class="number">0.9</span>]]</span><br></pre></td></tr></table></figure>
-
-<p>由于transformer的注意力机制无法像RNN那样自然地关注到序列的位置信息，所以这里需要对每个token向量加上一个positional code，具体公式如下：</p>
-<p>$$<br>PE_{(pos, 2i)} &#x3D; \sin(\frac{pos}{10000^{2i&#x2F;d_m}})<br>$$</p>
-<p>$$<br>PE_{(pos, 2i+1)} &#x3D; \cos(\frac{pos}{10000^{2i&#x2F;d_m}})<br>$$</p>
-<p>所以此时的输入$H$变成了：</p>
-<p>$$<br>H + PE &#x3D; H^′<br>$$</p>
-<p>其中PE是位置编码矩阵，其大小与H相同，也为<code>[seq_l, d_m]</code> 。这样，每个token的向量表示中就包含了它在序列中的位置信息。接下来，我们需要将这个输入H′送入Transformer的核心组件——多头自注意力机制（Multi-head Self-Attention）。</p>
-<p>Transformer的多头自注意力机制通过<code>Q, K, V</code>三个核心矩阵来完成（Query, Key和Value）</p>
+<p>由于transformer的注意力机制无法像RNN那样自然地关注到序列的位置信息，所以这里需要对每个token向量加上一个positional
+code，具体公式如下：</p>
+<p><span class="math inline">$PE_{(pos, 2i)} =
+\sin(\frac{pos}{10000^{2i/d_m}})$</span></p>
+<p><span class="math inline">$PE_{(pos, 2i+1)} =
+\cos(\frac{pos}{10000^{2i/d_m}})$</span></p>
+<p>所以此时的输入<span class="math inline"><em>H</em></span>变成了：</p>
+<p><span
+class="math inline"><em>H</em> + <em>P</em><em>E</em> = <em>H</em><sup>′</sup></span></p>
+<p>其中PE是位置编码矩阵，其大小与H相同，也为<code>[seq_l, d_m]</code>
+。这样，每个token的向量表示中就包含了它在序列中的位置信息。接下来，我们需要将这个输入H′送入Transformer的核心组件——多头自注意力机制（Multi-head
+Self-Attention）。</p>
+<p>Transformer的多头自注意力机制通过<code>Q, K, V</code>三个核心矩阵来完成（Query,
+Key和Value）</p>
 <p>在多头自注意力机制中，我们首先计算Q, K, V矩阵：</p>
-<p>$$<br>Q &#x3D; H^{\prime}W_Q<br>$$</p>
-<p>$$<br>K &#x3D; H^{\prime}W_K<br>$$</p>
-<p>$$<br>V &#x3D; H^{\prime}W_V<br>$$</p>
-<p>其中，$W_Q, W_K, W_V$是参数矩阵，它们的大小都是<code>[d_m, d_k]</code>，其中<code>d_k = d_m / h</code>，<code>h</code>是注意力头的数量。</p>
-<p>我们假设有3个注意力头，那么就会存在三组参数矩阵，生成三组<code>Q, K, V</code> 。接下来，对于每个注意力头，我们计算注意力得分矩阵：</p>
-<p>$$<br>Attention(Q, K, V) &#x3D; softmax(\frac{QK^T}{\sqrt{d_k}})V<br>$$</p>
-<p>在我们的例子中：<code>d_k=3</code> ，而$\frac{1}{\sqrt{d_k}}$是一个缩放因子，用于防止softmax数值爆炸的问题。</p>
-<p>在注意力公式中，$QK^T$可以视作Q和K两个矩阵中的向量进行点积；对于第一个注意力头，此时的结果可能为：</p>
+<p><span
+class="math inline"><em>Q</em> = <em>H</em><sup>′</sup><em>W</em><sub><em>Q</em></sub></span></p>
+<p><span
+class="math inline"><em>K</em> = <em>H</em><sup>′</sup><em>W</em><sub><em>K</em></sub></span></p>
+<p><span
+class="math inline"><em>V</em> = <em>H</em><sup>′</sup><em>W</em><sub><em>V</em></sub></span></p>
+<p>其中，<span
+class="math inline"><em>W</em><sub><em>Q</em></sub>, <em>W</em><sub><em>K</em></sub>, <em>W</em><sub><em>V</em></sub></span>是参数矩阵，它们的大小都是<code>[d_m, d_k]</code>，其中<code>d_k = d_m / h</code>，<code>h</code>是注意力头的数量。</p>
+<p>我们假设有3个注意力头，那么就会存在三组参数矩阵，生成三组<code>Q, K, V</code>
+。接下来，对于每个注意力头，我们计算注意力得分矩阵：</p>
+<p><span class="math inline">$Attention(Q, K, V) =
+softmax(\frac{QK^T}{\sqrt{d_k}})V$</span></p>
+<p>在我们的例子中：<code>d_k=3</code> ，而<span
+class="math inline">$\frac{1}{\sqrt{d_k}}$</span>是一个缩放因子，用于防止softmax数值爆炸的问题。</p>
+<p>在注意力公式中，<span
+class="math inline"><em>Q</em><em>K</em><sup><em>T</em></sup></span>可以视作Q和K两个矩阵中的向量进行点积；对于第一个注意力头，此时的结果可能为：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">0.7</span>, <span class="number">0.1</span>, <span class="number">0.2</span>],</span><br><span class="line"> [<span class="number">0.3</span>, <span class="number">0.6</span>, <span class="number">0.1</span>],</span><br><span class="line"> [<span class="number">0.2</span>, <span class="number">0.2</span>, <span class="number">0.6</span>]]</span><br></pre></td></tr></table></figure>
-
 <p>这个矩阵表示每个token对其他token的关注程度。</p>
-<p>例如，第一行表示”我”这个token对”我”、”爱”和”学习”这三个token的关注度分别为0.7、0.1和0.2。</p>
+<p>例如，第一行表示”我”这个token对”我”、“爱”和”学习”这三个token的关注度分别为0.7、0.1和0.2。</p>
 <p>经过softmax归一化后，这些注意力权重将用于对V矩阵进行加权求和，从而生成新的上下文表示。</p>
 <p>计算出每个注意力头的注意力得分矩阵后，我们将这些结果拼接起来，并通过一个线性变换，得到多头注意力的输出：</p>
-<p>$$<br>MultiHead(Q, K, V) &#x3D; Concat(head_1, head_2, …, head_h)W_O<br>$$</p>
-<p>其中，$W_O$是一个参数矩阵，大小为<code>[d_m, d_m]</code>。这个多头注意力的输出将进入Transformer的下一个组件——前馈神经网络（Feed-Forward Network）。</p>
+<p><span
+class="math inline"><em>M</em><em>u</em><em>l</em><em>t</em><em>i</em><em>H</em><em>e</em><em>a</em><em>d</em>(<em>Q</em>, <em>K</em>, <em>V</em>) = <em>C</em><em>o</em><em>n</em><em>c</em><em>a</em><em>t</em>(<em>h</em><em>e</em><em>a</em><em>d</em><sub>1</sub>, <em>h</em><em>e</em><em>a</em><em>d</em><sub>2</sub>, ..., <em>h</em><em>e</em><em>a</em><em>d</em><sub><em>h</em></sub>)<em>W</em><sub><em>O</em></sub></span></p>
+<p>其中，<span
+class="math inline"><em>W</em><sub><em>O</em></sub></span>是一个参数矩阵，大小为<code>[d_m, d_m]</code>。这个多头注意力的输出将进入Transformer的下一个组件——前馈神经网络（Feed-Forward
+Network）。</p>
 <p>对于FNN，可以理解为一个MLP，而我们最终会得到一个形状为<code>[seq_l, d_m]</code>的输出。</p>
-<aside>
-✅
-
-<p>至此，transformer的encoder部分已经运行结束</p>
-</aside>
-
-<h3 id="Decoder部分"><a href="#Decoder部分" class="headerlink" title="Decoder部分"></a>Decoder部分</h3><p>Decoder部分的运行过程类似于Encoder，但有几个关键区别：</p>
+<p>✅ 至此，transformer的encoder部分已经运行结束</p>
+<h3 id="decoder部分">Decoder部分</h3>
+<p>Decoder部分的运行过程类似于Encoder，但有几个关键区别：</p>
 <ul>
 <li>首先，Decoder是自回归（Autoregressive）的，意味着它一次只能生成一个token。</li>
-<li>其次，为了防止模型在训练时”作弊”看到未来的token，我们使用掩码机制（Masked Attention）。在实践中，这意味着我们在计算注意力分数时，将未来位置的分数设为负无穷（-inf），这样softmax后的权重就为0，模型就无法使用未来的信息。假设我们的目标输出序列是”我喜欢学习”，在生成”喜欢”这个token时，模型只能看到”我”这个已经生成的token。</li>
+<li>其次，为了防止模型在训练时”作弊”看到未来的token，我们使用掩码机制（Masked
+Attention）。在实践中，这意味着我们在计算注意力分数时，将未来位置的分数设为负无穷（-inf），这样softmax后的权重就为0，模型就无法使用未来的信息。假设我们的目标输出序列是”我喜欢学习”，在生成”喜欢”这个token时，模型只能看到”我”这个已经生成的token。</li>
 <li>除了掩码自注意力外，Decoder还包含一个额外的<code>编码器-解码器注意力层</code>，用于关注Encoder的输出。这使得Decoder能够在生成每个token时，考虑输入序列的全部信息。这种结构特别适合机器翻译等任务，使模型能够准确捕捉源语言和目标语言之间的对应关系。</li>
 </ul>
-<p>假设我们运行的transformer执行的是汉译英的翻译任务，并且已经翻译出<code>&quot;I like&quot;</code>（目标为<code>&quot;I like study&quot;</code>）：</p>
+<p>假设我们运行的transformer执行的是汉译英的翻译任务，并且已经翻译出<code>"I like"</code>（目标为<code>"I like study"</code>）：</p>
 <p>我们首先将已经生成的结果通过<code>嵌入层和位置编码</code>处理，得到初始的向量表示；然后这个向量会通过<code>带掩码的自注意力层</code>，确保模型只能看到已经生成的token。</p>
-<p>如果此时是推理阶段，那么掩码与否无关紧要；如果此时是训练阶段，我们要模型在生成<code>&quot;I like&quot;</code> 的前提下生成<code>&quot;study&quot;</code> ，那么在进行并行的训练时候，需要将<code>&quot;I like study&quot;</code> 进行掩码处理，结果形如：</p>
+<p>如果此时是推理阶段，那么掩码与否无关紧要；如果此时是训练阶段，我们要模型在生成<code>"I like"</code>
+的前提下生成<code>"study"</code>
+，那么在进行并行的训练时候，需要将<code>"I like study"</code>
+进行掩码处理，结果形如：</p>
 <p><code>&lt;BOS&gt; -inf -inf -inf -inf</code></p>
 <p><code>&lt;BOS&gt; I -inf -inf -inf</code></p>
 <p><code>&lt;BOS&gt; I like -inf -inf</code></p>
 <p><code>&lt;BOS&gt; I like study -inf</code></p>
 <p><code>&lt;BOS&gt; I like study &lt;EOS&gt;</code></p>
-<p>接着通过<code>编码器-解码器注意力层</code>，模型能够关注编码器输出的信息（我们的<code>&quot;我爱学习&quot;</code>），从而生成相应的英文翻译<code>&quot;study&quot;</code>。</p>
-<aside>
-✅
-
-<p>至此，transformer已完整运行一次</p>
-</aside>
-
-<h2 id="Q-A"><a href="#Q-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><h3 id="Q1-归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？"><a href="#Q1-归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？" class="headerlink" title="Q1: 归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？"></a><strong>Q1: 归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？</strong></h3><ul>
-<li>核心思想是让神经网络每一层的输入分布保持一致，从而解决因参数更新导致的“内部协变量偏移”（Internal Covariate Shift）。这使得网络学习更稳定，加速收敛，并能缓解梯度消失&#x2F;爆炸问题。这里的“分布”通常指神经元激活值的均值和方差。</li>
+<p>接着通过<code>编码器-解码器注意力层</code>，模型能够关注编码器输出的信息（我们的<code>"我爱学习"</code>），从而生成相应的英文翻译<code>"study"</code>。</p>
+<p>✅ 至此，transformer已完整运行一次</p>
+<h2 id="qa">Q&amp;A</h2>
+<h3
+id="q1-归一化normalization的核心思想是什么为什么它能解决梯度问题"><strong>Q1:
+归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？</strong></h3>
+<ul>
+<li>核心思想是让神经网络每一层的输入分布保持一致，从而解决因参数更新导致的“内部协变量偏移”（Internal
+Covariate
+Shift）。这使得网络学习更稳定，加速收敛，并能缓解梯度消失/爆炸问题。这里的“分布”通常指神经元激活值的均值和方差。</li>
 </ul>
-<h3 id="Q2-为什么批量归一化（BN）不适用于循环神经网络（RNN）？"><a href="#Q2-为什么批量归一化（BN）不适用于循环神经网络（RNN）？" class="headerlink" title="Q2: 为什么批量归一化（BN）不适用于循环神经网络（RNN）？"></a><strong>Q2: 为什么批量归一化（BN）不适用于循环神经网络（RNN）？</strong></h3><ul>
+<h3 id="q2-为什么批量归一化bn不适用于循环神经网络rnn"><strong>Q2:
+为什么批量归一化（BN）不适用于循环神经网络（RNN）？</strong></h3>
+<ul>
 <li><strong>分布差异</strong>：BN对一个批次中<strong>同一时间步</strong>的激活值进行归一化。但在变长序列中，这些激活值可能对应完全不同的词语（如“你”和“机器学习”），它们来自不同分布，强制归一化会破坏特征。</li>
 <li><strong>变长序列问题</strong>：BN需要为每个时间步保存统计量。但测试集可能出现比训练集更长的序列，导致无法获取后续时间步的统计量。</li>
 <li><strong>计算开销</strong>：BN需要为每个时间步单独计算和保存统计量，这在时间维度上增加了巨大的计算和内存开销。</li>
 </ul>
-<h3 id="Q3-批量归一化与大数定理和中心极限定理有什么关系？"><a href="#Q3-批量归一化与大数定理和中心极限定理有什么关系？" class="headerlink" title="Q3: 批量归一化与大数定理和中心极限定理有什么关系？"></a><strong>Q3: 批量归一化与大数定理和中心极限定理有什么关系？</strong></h3><ul>
+<h3 id="q3-批量归一化与大数定理和中心极限定理有什么关系"><strong>Q3:
+批量归一化与大数定理和中心极限定理有什么关系？</strong></h3>
+<ul>
 <li><strong>大数定理</strong>：BN利用大数定理的思想，用<strong>mini-batch的样本统计量</strong>来近似<strong>整个数据集的总体统计量</strong>，从而使归一化操作在每次迭代中都具有代表性。</li>
 <li><strong>中心极限定理</strong>：BN利用该定理所揭示的“样本均值的分布趋近于正态分布”的规律，来<strong>保证用于标准化的统计量是稳定可靠的</strong>。这使得BN能够放心地将数据强制归一化到<strong>均值为0、方差为1</strong>的稳定分布，这才是其真正的目的，而非让数据本身变为正态分布。</li>
 </ul>
-<h3 id="Q4-层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？"><a href="#Q4-层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？" class="headerlink" title="Q4: 层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？"></a><strong>Q4: 层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？</strong></h3><ul>
-<li><strong>参数更新频率</strong>：无论是BN还是LN，它们的可学习参数（γ和$\beta$）以及模型的其他参数，都是<strong>每个训练批次（batch）更新一次</strong>。</li>
+<h3
+id="q4-层归一化ln和批量归一化bn在参数更新和效率上有何不同"><strong>Q4:
+层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？</strong></h3>
+<ul>
+<li><strong>参数更新频率</strong>：无论是BN还是LN，它们的可学习参数（γ和<span
+class="math inline"><em>β</em></span>）以及模型的其他参数，都是<strong>每个训练批次（batch）更新一次</strong>。</li>
 <li><strong>效率</strong>：LN的效率通常更高。因为LN对每个样本独立计算统计量，其计算模式非常适合现代GPU的<strong>并行计算</strong>。而BN需要先汇总整个批次的统计量，会产生额外的同步开销。</li>
 <li><strong>推理</strong>：LN的归一化只依赖于单个样本，因此训练和测试时的行为完全一致，<strong>无需保存任何全局统计量</strong>。而BN必须在训练时保存一个全局统计量的运行平均值，用于测试时使用。</li>
 </ul>
-<h3 id="Q5-Transformer模型如何处理长序列？"><a href="#Q5-Transformer模型如何处理长序列？" class="headerlink" title="Q5: Transformer模型如何处理长序列？"></a><strong>Q5: Transformer模型如何处理长序列？</strong></h3><ul>
+<h3 id="q5-transformer模型如何处理长序列"><strong>Q5:
+Transformer模型如何处理长序列？</strong></h3>
+<ul>
 <li>Transformer不使用循环，而是通过<strong>自注意力机制</strong>进行<strong>并行计算</strong>。它使用<strong>位置编码</strong>来提供序列中的位置信息，并用掩码（Masking）来处理变长序列中的填充部分，确保模型不会将注意力放在无意义的填充词上。</li>
 </ul>
-<h3 id="Q6-在大模型中，嵌入层（Embedding-Layer）的参数量是如何计算的？"><a href="#Q6-在大模型中，嵌入层（Embedding-Layer）的参数量是如何计算的？" class="headerlink" title="Q6: 在大模型中，嵌入层（Embedding Layer）的参数量是如何计算的？"></a><strong>Q6: 在大模型中，嵌入层（Embedding Layer）的参数量是如何计算的？</strong></h3><ul>
-<li>嵌入层的参数量非常大，它等于<strong>词汇量大小（vocab_size）乘以嵌入维度（embedding_dim或d_model）</strong>。例如，一个有5万词汇，嵌入维度为1024的模型，其嵌入层参数量就是50,000 * 1024。</li>
+<h3
+id="q6-在大模型中嵌入层embedding-layer的参数量是如何计算的"><strong>Q6:
+在大模型中，嵌入层（Embedding
+Layer）的参数量是如何计算的？</strong></h3>
+<ul>
+<li>嵌入层的参数量非常大，它等于<strong>词汇量大小（vocab_size）乘以嵌入维度（embedding_dim或d_model）</strong>。例如，一个有5万词汇，嵌入维度为1024的模型，其嵌入层参数量就是50,000
+* 1024。</li>
 </ul>
 
                     
@@ -612,7 +656,14 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AATransformer"><span class="nav-text">从零搭建一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-%E4%BB%8E%E9%9B%B6%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AATransformer"><span class="nav-text">I. 从零运行一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encoder%E9%83%A8%E5%88%86"><span class="nav-text">Encoder部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decoder%E9%83%A8%E5%88%86"><span class="nav-text">Decoder部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-A"><span class="nav-text">Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalization%EF%BC%89%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E8%83%BD%E8%A7%A3%E5%86%B3%E6%A2%AF%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">Q1: 归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88BN%EF%BC%89%E4%B8%8D%E9%80%82%E7%94%A8%E4%BA%8E%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88RNN%EF%BC%89%EF%BC%9F"><span class="nav-text">Q2: 为什么批量归一化（BN）不适用于循环神经网络（RNN）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E4%B8%8E%E5%A4%A7%E6%95%B0%E5%AE%9A%E7%90%86%E5%92%8C%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="nav-text">Q3: 批量归一化与大数定理和中心极限定理有什么关系？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4-%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88LN%EF%BC%89%E5%92%8C%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88BN%EF%BC%89%E5%9C%A8%E5%8F%82%E6%95%B0%E6%9B%B4%E6%96%B0%E5%92%8C%E6%95%88%E7%8E%87%E4%B8%8A%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="nav-text">Q4: 层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q5-Transformer%E6%A8%A1%E5%9E%8B%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E9%95%BF%E5%BA%8F%E5%88%97%EF%BC%9F"><span class="nav-text">Q5: Transformer模型如何处理长序列？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q6-%E5%9C%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%AD%EF%BC%8C%E5%B5%8C%E5%85%A5%E5%B1%82%EF%BC%88Embedding-Layer%EF%BC%89%E7%9A%84%E5%8F%82%E6%95%B0%E9%87%8F%E6%98%AF%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E7%9A%84%EF%BC%9F"><span class="nav-text">Q6: 在大模型中，嵌入层（Embedding Layer）的参数量是如何计算的？</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAtransformer"><span class="nav-text">从零搭建一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i.-%E4%BB%8E%E9%9B%B6%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AAtransformer"><span class="nav-text">I. 从零运行一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoder%E9%83%A8%E5%88%86"><span class="nav-text">Encoder部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decoder%E9%83%A8%E5%88%86"><span class="nav-text">Decoder部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qa"><span class="nav-text">Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q1-%E5%BD%92%E4%B8%80%E5%8C%96normalization%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E8%83%BD%E8%A7%A3%E5%86%B3%E6%A2%AF%E5%BA%A6%E9%97%AE%E9%A2%98"><span class="nav-text">Q1:
+归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96bn%E4%B8%8D%E9%80%82%E7%94%A8%E4%BA%8E%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Crnn"><span class="nav-text">Q2:
+为什么批量归一化（BN）不适用于循环神经网络（RNN）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q3-%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E4%B8%8E%E5%A4%A7%E6%95%B0%E5%AE%9A%E7%90%86%E5%92%8C%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB"><span class="nav-text">Q3:
+批量归一化与大数定理和中心极限定理有什么关系？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q4-%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96ln%E5%92%8C%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96bn%E5%9C%A8%E5%8F%82%E6%95%B0%E6%9B%B4%E6%96%B0%E5%92%8C%E6%95%88%E7%8E%87%E4%B8%8A%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C"><span class="nav-text">Q4:
+层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q5-transformer%E6%A8%A1%E5%9E%8B%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E9%95%BF%E5%BA%8F%E5%88%97"><span class="nav-text">Q5:
+Transformer模型如何处理长序列？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q6-%E5%9C%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%AD%E5%B5%8C%E5%85%A5%E5%B1%82embedding-layer%E7%9A%84%E5%8F%82%E6%95%B0%E9%87%8F%E6%98%AF%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E7%9A%84"><span class="nav-text">Q6:
+在大模型中，嵌入层（Embedding
+Layer）的参数量是如何计算的？</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
@@ -807,7 +858,14 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AATransformer"><span class="nav-text">从零搭建一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-%E4%BB%8E%E9%9B%B6%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AATransformer"><span class="nav-text">I. 从零运行一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encoder%E9%83%A8%E5%88%86"><span class="nav-text">Encoder部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decoder%E9%83%A8%E5%88%86"><span class="nav-text">Decoder部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q-A"><span class="nav-text">Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q1-%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalization%EF%BC%89%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E8%83%BD%E8%A7%A3%E5%86%B3%E6%A2%AF%E5%BA%A6%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">Q1: 归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88BN%EF%BC%89%E4%B8%8D%E9%80%82%E7%94%A8%E4%BA%8E%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88RNN%EF%BC%89%EF%BC%9F"><span class="nav-text">Q2: 为什么批量归一化（BN）不适用于循环神经网络（RNN）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q3-%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E4%B8%8E%E5%A4%A7%E6%95%B0%E5%AE%9A%E7%90%86%E5%92%8C%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB%EF%BC%9F"><span class="nav-text">Q3: 批量归一化与大数定理和中心极限定理有什么关系？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q4-%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88LN%EF%BC%89%E5%92%8C%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88BN%EF%BC%89%E5%9C%A8%E5%8F%82%E6%95%B0%E6%9B%B4%E6%96%B0%E5%92%8C%E6%95%88%E7%8E%87%E4%B8%8A%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C%EF%BC%9F"><span class="nav-text">Q4: 层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q5-Transformer%E6%A8%A1%E5%9E%8B%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E9%95%BF%E5%BA%8F%E5%88%97%EF%BC%9F"><span class="nav-text">Q5: Transformer模型如何处理长序列？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q6-%E5%9C%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%AD%EF%BC%8C%E5%B5%8C%E5%85%A5%E5%B1%82%EF%BC%88Embedding-Layer%EF%BC%89%E7%9A%84%E5%8F%82%E6%95%B0%E9%87%8F%E6%98%AF%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E7%9A%84%EF%BC%9F"><span class="nav-text">Q6: 在大模型中，嵌入层（Embedding Layer）的参数量是如何计算的？</span></a></li></ol></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAtransformer"><span class="nav-text">从零搭建一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#i.-%E4%BB%8E%E9%9B%B6%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AAtransformer"><span class="nav-text">I. 从零运行一个Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoder%E9%83%A8%E5%88%86"><span class="nav-text">Encoder部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decoder%E9%83%A8%E5%88%86"><span class="nav-text">Decoder部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qa"><span class="nav-text">Q&amp;A</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q1-%E5%BD%92%E4%B8%80%E5%8C%96normalization%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E8%83%BD%E8%A7%A3%E5%86%B3%E6%A2%AF%E5%BA%A6%E9%97%AE%E9%A2%98"><span class="nav-text">Q1:
+归一化（Normalization）的核心思想是什么？为什么它能解决梯度问题？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96bn%E4%B8%8D%E9%80%82%E7%94%A8%E4%BA%8E%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9Crnn"><span class="nav-text">Q2:
+为什么批量归一化（BN）不适用于循环神经网络（RNN）？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q3-%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96%E4%B8%8E%E5%A4%A7%E6%95%B0%E5%AE%9A%E7%90%86%E5%92%8C%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86%E6%9C%89%E4%BB%80%E4%B9%88%E5%85%B3%E7%B3%BB"><span class="nav-text">Q3:
+批量归一化与大数定理和中心极限定理有什么关系？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q4-%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96ln%E5%92%8C%E6%89%B9%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96bn%E5%9C%A8%E5%8F%82%E6%95%B0%E6%9B%B4%E6%96%B0%E5%92%8C%E6%95%88%E7%8E%87%E4%B8%8A%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C"><span class="nav-text">Q4:
+层归一化（LN）和批量归一化（BN）在参数更新和效率上有何不同？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q5-transformer%E6%A8%A1%E5%9E%8B%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E9%95%BF%E5%BA%8F%E5%88%97"><span class="nav-text">Q5:
+Transformer模型如何处理长序列？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#q6-%E5%9C%A8%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%AD%E5%B5%8C%E5%85%A5%E5%B1%82embedding-layer%E7%9A%84%E5%8F%82%E6%95%B0%E9%87%8F%E6%98%AF%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E7%9A%84"><span class="nav-text">Q6:
+在大模型中，嵌入层（Embedding
+Layer）的参数量是如何计算的？</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
