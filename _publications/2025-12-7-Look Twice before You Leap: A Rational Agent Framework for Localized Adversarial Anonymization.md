@@ -1,4 +1,5 @@
 ---
+published: true
 title: "Look Twice before You Leap: A Rational Agent Framework for Localized Adversarial Anonymization"
 collection: publications
 permalink: /publication/2025-12-07-rlaa-anonymization
