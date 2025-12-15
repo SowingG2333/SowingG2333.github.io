@@ -57,7 +57,7 @@ Despite being an undergraduate, I am deeply passionate about research. My resear
 </ul>
 
 ## 🎖 Honors and Awards
-* **2024** <span class="date-right">UESTC</span>
+* **2025** <span class="date-right">UESTC</span>
   **Special Scholarship**
 * **2024** <span class="date-right">UESTC</span>
   **Outstanding Student Scholarship**
