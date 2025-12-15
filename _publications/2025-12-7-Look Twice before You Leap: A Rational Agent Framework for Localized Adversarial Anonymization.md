@@ -1,0 +1,11 @@
+---
+title: "Look Twice before You Leap: A Rational Agent Framework for Localized Adversarial Anonymization"
+collection: publications
+permalink: /publication/2025-12-07-rlaa-anonymization
+excerpt: 'This paper addresses the privacy paradox in LLM-based anonymization by proposing RLAA, a fully localized and training-free framework that introduces a rationality gatekeeper to prevent utility collapse.'
+date: 2025-12-07
+venue: 'arXiv preprint'
+paperurl: 'https://arxiv.org/abs/2512.06713'
+citation: 'Donghang Duan, Xu Zheng. (2025). "Look Twice before You Leap: A Rational Agent Framework for Localized Adversarial Anonymization." <i>arXiv preprint arXiv:2512.06713</i>.'
+---
+Current LLM-based text anonymization frameworks usually rely on remote API services from powerful LLMs, which creates an inherent "privacy paradox": users must somehow disclose data to untrusted third parties for superior privacy preservation. Moreover, directly migrating these frameworks to local small-scale models (LSMs) offers a suboptimal solution with catastrophic collapse in utility based on our core findings. Our work argues that this failure stems not merely from the capability deficits of LSMs, but from the inherent irrationality of the greedy adversarial strategies employed by current state-of-the-art (SoTA) methods. We model the anonymization process as a trade-off between Marginal Privacy Gain (MPG) and Marginal Utility Cost (MUC), and demonstrate that greedy strategies inevitably drift into an irrational state. To address this, we propose Rational Localized Adversarial Anonymization (RLAA), a fully localized and training-free framework featuring an Attacker-Arbitrator-Anonymizer (A-A-A) architecture. RLAA introduces an arbitrator that acts as a rationality gatekeeper, validating the attacker's inference to filter out feedback providing negligible benefits on privacy preservation. This mechanism enforces a rational early-stopping criterion, and systematically prevents utility collapse. Extensive experiments on different datasets demonstrate that RLAA achieves the best privacy-utility trade-off, and in some cases even outperforms SoTA on the Pareto principle. Our code and datasets will be released upon acceptance.
