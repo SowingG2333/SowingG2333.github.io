@@ -3,7 +3,7 @@ title: "Look Twice before You Leap: A Rational Agent Framework for Localized Adv
 collection: publications
 permalink: /publication/2025-12-07-rlaa-anonymization
 excerpt: 'This paper addresses the privacy paradox in LLM-based anonymization by proposing RLAA, a fully localized and training-free framework that introduces a rationality gatekeeper to prevent utility collapse.'
-date: 2023-1-1
+date: 2025-12-07
 venue: 'arXiv preprint'
 paperurl: 'https://arxiv.org/abs/2512.06713'
 citation: 'Donghang Duan, Xu Zheng. (2025). "Look Twice before You Leap: A Rational Agent Framework for Localized Adversarial Anonymization." <i>arXiv preprint arXiv:2512.06713</i>.'

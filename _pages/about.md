@@ -72,5 +72,4 @@ Despite being an undergraduate, I am deeply passionate about research. My resear
 ## 💻 Technical Skills
 * **Programming**: Python, C/C++, JavaScript, Verilog, LaTeX
 * **AI Frameworks**: PyTorch, HuggingFace Transformers, DeepSpeed
-* **Development**: Linux/Unix, Docker, k8s, Git,
-* **Languages**: English (CET4-617/CET6-607), Chinese (Native)
+* **Development**: Linux/Unix, Docker, k8s, Git
