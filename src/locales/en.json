@@ -10,8 +10,7 @@
   },
   "aria": {
     "openNav": "Open navigation menu",
-    "toggleColorMode": "Toggle color mode",
-    "toggleLanguage": "Switch language"
+    "toggleColorMode": "Toggle color mode"
   },
   "about": {
     "recentUpdates": "Recent Updates",

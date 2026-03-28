@@ -2,34 +2,26 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 // ============================================================
-// Data loader (bilingual)
+// Data loader
 //
-// Loads content from two sources per language:
-//   - Markdown files (content/**/*.md, content/zh/**/*.md)
-//   - JSON files (content/*.json, content/zh/*.json)
-//
-// At build time, both languages are loaded eagerly.
-// At runtime, getLocalizedData(lang) selects the right set.
+// Loads content from:
+//   - Markdown files (content/**/*.md)
+//   - JSON files (content/*.json)
 // ============================================================
 
 import type {
   Research, Experience, NewsItem, About, Publication,
   ProjectItem, Award, ExperienceEntry, Talk, TeachingEntry,
 } from '../types'
+import type { SiteConfig } from '../site.config'
+import { siteConfig } from '../site.config'
 
 // ── Markdown glob imports (each .md → { frontmatter..., body: html }) ──
 
-// English (default)
 const projectMdsEn = import.meta.glob('/content/projects/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
 const articleMdsEn = import.meta.glob('/content/articles/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
 const publicationMdsEn = import.meta.glob('/content/publications/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
 const aboutMdEn = import.meta.glob('/content/about.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-
-// Chinese
-const projectMdsZh = import.meta.glob('/content/zh/projects/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const articleMdsZh = import.meta.glob('/content/zh/articles/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const publicationMdsZh = import.meta.glob('/content/zh/publications/*.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
-const aboutMdZh = import.meta.glob('/content/zh/about.md', { eager: true }) as Record<string, { default: Record<string, unknown> }>
 
 function collectMd(modules: Record<string, { default: Record<string, unknown> }>): Record<string, unknown>[] {
   return Object.values(modules).map(m => {
@@ -76,29 +68,35 @@ function mdToAbout(raw: Record<string, unknown>): About {
   return { journey, ...rest } as unknown as About
 }
 
-// ── JSON imports (both languages) ──
+// ── JSON imports ──
 
 import experienceJsonEn from '@content/experience.json'
 import newsJsonEn from '@content/news.json'
 import awardsJsonEn from '@content/awards.json'
 import researchJsonEn from '@content/research.json'
 import logosJsonEn from '@content/logos.json'
-import siteJsonEn from '@content/site.json'
 import talksJsonEn from '@content/talks.json'
 import teachingJsonEn from '@content/teaching.json'
 
-import experienceJsonZh from '@content/zh/experience.json'
-import newsJsonZh from '@content/zh/news.json'
-import awardsJsonZh from '@content/zh/awards.json'
-import researchJsonZh from '@content/zh/research.json'
-import logosJsonZh from '@content/zh/logos.json'
-import siteJsonZh from '@content/zh/site.json'
-import talksJsonZh from '@content/zh/talks.json'
-import teachingJsonZh from '@content/zh/teaching.json'
+// ── Build dataset ──
 
-// ── Build both language datasets ──
+interface LocalizedDataset {
+  projects: ProjectItem[]
+  articles: ProjectItem[]
+  publications: Publication[]
+  about: About
+  research: Research
+  experience: Experience
+  experienceTimeline: ExperienceEntry[]
+  news: NewsItem[]
+  awards: Award[]
+  talks: Talk[]
+  teaching: TeachingEntry[]
+  institutionLogos: Record<string, string>
+  siteConfig: SiteConfig
+}
 
-const enData = {
+export const data: LocalizedDataset = {
   projects: collectMd(projectMdsEn).map(mdToProject),
   articles: collectMd(articleMdsEn).map(mdToProject),
   publications: collectMd(publicationMdsEn).map(mdToPublication),
@@ -111,46 +109,23 @@ const enData = {
   talks: talksJsonEn as Talk[],
   teaching: teachingJsonEn as TeachingEntry[],
   institutionLogos: logosJsonEn as Record<string, string>,
-  siteConfig: siteJsonEn,
-}
-
-const zhData = {
-  projects: collectMd(projectMdsZh).map(mdToProject),
-  articles: collectMd(articleMdsZh).map(mdToProject),
-  publications: collectMd(publicationMdsZh).map(mdToPublication),
-  about: mdToAbout(Object.values(aboutMdZh)[0]?.default ?? {}),
-  research: researchJsonZh as Research,
-  experience: { ...experienceJsonZh, professional: [], academic: [] } as Experience,
-  experienceTimeline: experienceJsonZh.timeline as ExperienceEntry[],
-  news: newsJsonZh as NewsItem[],
-  awards: awardsJsonZh as Award[],
-  talks: talksJsonZh as Talk[],
-  teaching: teachingJsonZh as TeachingEntry[],
-  institutionLogos: logosJsonZh as Record<string, string>,
-  siteConfig: siteJsonZh,
-}
-
-const dataByLang: Record<string, typeof enData> = { en: enData, zh: zhData }
-
-/** Get content data for a specific language (falls back to English) */
-export function getLocalizedData(lang: string) {
-  return dataByLang[lang] ?? enData
+  siteConfig,
 }
 
 // ── Default exports (English, for backward compatibility) ──
 
-export const projects = enData.projects
-export const articles = enData.articles
-export const publications = enData.publications
-export const about = enData.about
-export const research = enData.research
-export const experience = enData.experience
-export const experienceTimeline = enData.experienceTimeline
-export const news = enData.news
-export const awards = enData.awards
-export const talks = enData.talks
-export const teaching = enData.teaching
-export const institutionLogos = enData.institutionLogos
+export const projects = data.projects
+export const articles = data.articles
+export const publications = data.publications
+export const about = data.about
+export const research = data.research
+export const experience = data.experience
+export const experienceTimeline = data.experienceTimeline
+export const news = data.news
+export const awards = data.awards
+export const talks = data.talks
+export const teaching = data.teaching
+export const institutionLogos = data.institutionLogos
 
 // ── Helper functions ──
 

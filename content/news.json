@@ -1,41 +1,63 @@
 [
   {
     "type": "publication",
-    "badge": "Publication",
+    "badge": "Preprint",
     "icon": "FaFileAlt",
     "iconColor": "blue.400",
-    "title": "Paper on cuddle optimization accepted at CozyCon 2025",
-    "description": "Cookie's paper \"Optimal Lap Positioning for Warmth-Seeking Pomeranians\" has been accepted at CozyCon 2025.",
-    "date": "Dec 2025",
+    "title": "Published my first preprint on arXiv",
+    "description": "Published my first preprint titled \"Look Twice before You Leap: A Rational Agent Framework for Localized Adversarial Anonymization\" on arXiv.",
+    "date": "2025-12",
     "sortDate": "2025-12-01",
     "links": [
-      { "text": "Paper", "url": "#", "icon": "FaFilePdf" }
+      {
+        "text": "arXiv",
+        "url": "https://arxiv.org/abs/2512.06713",
+        "icon": "SiArxiv"
+      },
+      {
+        "text": "Scholar",
+        "url": "https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=gOWELg8AAAAJ&citation_for_view=gOWELg8AAAAJ:9yKSN-GCB0IC",
+        "icon": "SiGooglescholar"
+      }
     ]
   },
   {
-    "type": "talk",
-    "badge": "Talk",
-    "icon": "FaMicrophone",
+    "type": "publication",
+    "badge": "Paper",
+    "icon": "FaFileAlt",
+    "iconColor": "blue.400",
+    "title": "Published my first conference paper at IPCCC 2025",
+    "description": "Published my first paper titled \"Exploiting Parasitic Dependency for Free-Rider Elimination in Blockchain-based Federated Learning\" in IPCCC 2025.",
+    "date": "2025-09",
+    "sortDate": "2025-09-01",
+    "links": [
+      {
+        "text": "Scholar",
+        "url": "https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=gOWELg8AAAAJ&citation_for_view=gOWELg8AAAAJ:d1gkVwhDpl0C",
+        "icon": "SiGooglescholar"
+      }
+    ]
+  },
+  {
+    "type": "course",
+    "badge": "Research",
+    "icon": "FaGraduationCap",
     "iconColor": "purple.400",
-    "title": "Invited bark at International Cross-Species Play Workshop",
-    "description": "Presented findings on cooperative play dynamics between Pomeranians and Ragdoll cats, featuring case study with brother Lucas.",
-    "date": "Mar 2025",
-    "sortDate": "2025-03-10",
-    "links": [
-      { "text": "Slides", "url": "#", "icon": "FaDesktop" }
-    ]
+    "title": "Started my academic journey in Federated Learning",
+    "description": "Started my academic journey in Federated Learning, following the research group of Prof. Xu Zheng.",
+    "date": "2024-09",
+    "sortDate": "2024-09-01",
+    "links": []
   },
   {
-    "type": "release",
-    "badge": "Release",
-    "icon": "FaRocket",
-    "iconColor": "green.400",
-    "title": "PawShake.js v1.0 released",
-    "description": "Released PawShake.js, an open-source library for modeling treat-acquisition strategies through handshake protocols.",
-    "date": "Jul 2024",
-    "sortDate": "2024-07-01",
-    "links": [
-      { "text": "GitHub", "url": "#", "icon": "FaGithub" }
-    ]
+    "type": "course",
+    "badge": "Education",
+    "icon": "FaGraduationCap",
+    "iconColor": "purple.400",
+    "title": "Started my college journey at UESTC",
+    "description": "Started my college journey at the University of Electronic Science and Technology of China (UESTC).",
+    "date": "2023-09",
+    "sortDate": "2023-09-01",
+    "links": []
   }
 ]

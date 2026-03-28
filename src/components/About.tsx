@@ -15,8 +15,7 @@ function About() {
   const { research, experience, news, siteConfig } = useLocalizedData()
   const lineColor = useColorModeValue('gray.200', 'gray.700')
 
-  const cfg = siteConfig as Record<string, unknown>
-  const sectionOrder = (cfg.sections as string[] | undefined) ?? DEFAULT_SECTIONS
+  const sectionOrder = siteConfig.sections ?? DEFAULT_SECTIONS
 
   const sortedNews = useMemo(() => {
     return [...news].sort((a, b) => {

@@ -1,17 +1,22 @@
 {
   "currentResearch": [
     {
-      "lab": "The Cozy Corner",
-      "emoji": "🛋️",
-      "advisor": "Dr. Warm Lap",
-      "focus": "warmth-seeking behavior and human-proximity optimization",
+      "lab": "LLM Safety & Alignment",
+      "emoji": "🤖",
+      "focus": "training/inference time alignment of LLM",
       "link": "#"
     },
     {
-      "lab": "Lucas & Cookie Play Lab",
-      "emoji": "🐱",
-      "advisor": "Prof. Lucas",
-      "focus": "cross-species play dynamics and cooperative napping",
+      "lab": "Agent Security",
+      "emoji": "🛡️",
+      "focus": "prompt injection attacks/defences in Agent systems",
+      "link": "#"
+    },
+    {
+      "lab": "Privacy-Preserving Machine Learning",
+      "emoji": "🔒",
+      "advisor": "Prof. Xu Zheng",
+      "focus": "federated learning and privacy-aware machine learning systems",
       "link": "#"
     }
   ]

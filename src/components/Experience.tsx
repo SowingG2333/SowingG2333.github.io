@@ -10,6 +10,7 @@ import type { RoleType } from '../types'
 import { highlightData } from '../utils/highlightData'
 import { useLocalizedData } from '@/hooks/useLocalizedData'
 import { terminalPalette } from '@/config/theme'
+import type { SiteSkill } from '@/site.config'
 
 /* ── Keyframes ─────────────────────────────────────────────────── */
 const blink = keyframes`0%,100%{opacity:1}50%{opacity:0}`
@@ -47,7 +48,7 @@ const fmtDateFn = (v: string | undefined, presentLabel: string, lang: string) =>
   if (v.toLowerCase() === 'present') return presentLabel
   const d = new Date(v)
   if (Number.isNaN(d.getTime())) return v
-  return d.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', year: 'numeric' })
+  return d.toLocaleDateString(lang, { month: 'short', year: 'numeric' })
 }
 
 /* ── Component ─────────────────────────────────────────────────── */
@@ -55,9 +56,9 @@ const Experience: React.FC = () => {
   const { colorMode } = useColorMode()
   const isDark = colorMode === 'dark'
   const isMobile = useBreakpointValue({ base: true, md: false })
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { experienceTimeline, experience: experienceData, institutionLogos, siteOwner } = useLocalizedData()
-  const fmtDate = (v?: string) => fmtDateFn(v, t('experience.present'), i18n.language)
+  const fmtDate = (v?: string) => fmtDateFn(v, t('experience.present'), 'en-US')
 
   const [filter, setFilter] = useState<FilterType>('all')
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({})
@@ -163,7 +164,9 @@ const Experience: React.FC = () => {
         break
       case 'cat':
         if (parts[1] === 'skills') out([
-          siteOwner.skills.join(' · '),
+          siteOwner.skills
+            .map((skill: SiteSkill) => typeof skill === 'string' ? skill : skill.name)
+            .join(' · '),
         ])
         else out([`cat: ${parts[1] || ''}: not found`])
         break

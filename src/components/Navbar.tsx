@@ -1,7 +1,7 @@
 import {
   Box, Flex, IconButton, useColorMode, HStack, Link as ChakraLink, Image,
   useDisclosure, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody,
-  VStack, Divider, Button
+  VStack, Divider
 } from '@chakra-ui/react'
 import { MoonIcon, SunIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { Link, useLocation } from 'react-router-dom'
@@ -14,11 +14,7 @@ const Navbar: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const location = useLocation()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { t, i18n } = useTranslation()
-
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'zh' ? 'en' : 'zh')
-  }
+  const { t } = useTranslation()
 
   const socialLinks = [
     { icon: FaEnvelope, href: `mailto:${siteOwner.contact.email}`, label: 'Email' },
@@ -128,25 +124,6 @@ const Navbar: React.FC = () => {
               />
             </ChakraLink>
           ))}
-          {/* Language switcher */}
-          <Button
-            size="xs"
-            variant="ghost"
-            color="var(--text-color)"
-            fontWeight="medium"
-            fontSize="xs"
-            px={2}
-            minW="auto"
-            onClick={toggleLanguage}
-            aria-label={t('aria.toggleLanguage')}
-            _hover={{
-              bg: 'var(--hover-color)',
-              transform: 'translateY(-2px)'
-            }}
-            transition="all 0.2s"
-          >
-            {i18n.language === 'zh' ? 'EN' : '中'}
-          </Button>
           <IconButton
             aria-label={t('aria.toggleColorMode')}
             icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
@@ -205,15 +182,6 @@ const Navbar: React.FC = () => {
               <Divider borderColor="var(--border-color)" my={2} />
 
               <HStack spacing={2}>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  color="var(--text-color)"
-                  onClick={toggleLanguage}
-                  flex={1}
-                >
-                  {i18n.language === 'zh' ? 'English' : '中文'}
-                </Button>
                 <IconButton
                   aria-label={t('aria.toggleColorMode')}
                   icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}

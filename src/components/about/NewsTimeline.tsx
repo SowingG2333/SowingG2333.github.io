@@ -230,8 +230,17 @@ const NewsTimeline: React.FC<NewsTimelineProps> = ({ news, showHeader: _showHead
     }
   };
   
-  // Format the time as HH:MM:SS in the configured timezone
-  const bostonTime = new Date(currentTime.toLocaleString("en-US", {timeZone: siteOwner.timezone}));
+  // Format the time as HH:MM:SS in the configured timezone.
+  // Invalid user-provided timezones should never take down the whole page.
+  const safeTimezone = (() => {
+    try {
+      Intl.DateTimeFormat('en-US', { timeZone: siteOwner.timezone })
+      return siteOwner.timezone
+    } catch {
+      return 'UTC'
+    }
+  })()
+  const bostonTime = new Date(currentTime.toLocaleString("en-US", {timeZone: safeTimezone}));
   const formattedTime = bostonTime.toLocaleTimeString('en-US', {
     hour12: false,
     hour: '2-digit',

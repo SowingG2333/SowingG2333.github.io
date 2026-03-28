@@ -1,93 +1,113 @@
 {
   "_comment": "Your basic info. Edit the values below, then run: npm run dev",
-
-  "template": "terminal",
-  "components": {},
-  "sections": [
-    "hero", "bio", "newsDisplay", "selectedPublications",
-    "journey", "skills", "mentorship", "talks", "teaching",
-    "accomplishments", "contact", "footer"
-  ],
-
   "name": {
-    "full": "Cookie",
-    "first": "Cookie",
-    "nickname": "Cookie",
-    "last": "",
-    "display": "Cookie",
-    "authorVariants": ["Cookie"]
+    "full": "Donghang Duan",
+    "first": "Donghang",
+    "nickname": "Donghang",
+    "last": "Duan",
+    "display": "Donghang Duan",
+    "authorVariants": [
+      "Donghang Duan"
+    ]
   },
-
-  "title": "Woof! I'm Cookie",
-  "tagline": "A fluffy Pomeranian who codes by staying glued to her human, one paw shake at a time.",
-  "avatar": "cookie.jpg",
-
+  "title": "Hi there, I'm Donghang Duan",
+  "avatar": "avatar.jpg",
+  "sections": [
+    "hero",
+    "bio",
+    "newsDisplay",
+    "selectedPublications",
+    "journey",
+    "skills",
+    "accomplishments",
+    "contact",
+    "footer"
+  ],
   "terminal": {
-    "username": "cookie",
+    "username": "SowingG2333",
     "rotatingSubtitles": [
-      "cuddle with hooman",
-      "shake paws politely",
-      "lie down dramatically",
-      "play with brother Lucas",
-      "nap on hooman's lap"
+      "build cool projects",
+      "write some code",
+      "explore AI research",
+      "play video games",
+      "listen to rock music"
     ],
     "skills": [
-      { "name": "Shake Hands", "icon": "FaHandshake" },
-      { "name": "Lie Down", "icon": "FaBed" },
-      { "name": "Cuddling", "icon": "FaHeart" },
-      { "name": "Following Hooman", "icon": "FaWalking" },
-      { "name": "Napping", "icon": "FaMoon" },
-      { "name": "Treat Negotiation", "icon": "FaCookie" },
-      { "name": "Playing with Lucas", "icon": "FaCat" },
-      { "name": "Being Fluffy", "icon": "FaStar" }
+      "Python",
+      "C/C++",
+      "JavaScript",
+      "HTML/CSS",
+      "Verilog",
+      "LaTeX",
+      "PyTorch",
+      "Huggingface Transformers",
+      "Docker",
+      "Kubernetes"
     ],
-    "timezone": "America/Los_Angeles"
+    "timezone": "Asia/Shanghai"
   },
-
   "contact": {
-    "email": "limyoonaxi@gmail.com",
-    "academicEmail": "limyoonaxi@gmail.com",
-    "hiringEmail": "limyoonaxi@gmail.com",
-    "location": "Wherever Yaoyao Is"
+    "email": "donghangduan@gmail.com",
+    "academicEmail": "donghangduan@gmail.com",
+    "hiringEmail": "donghangduan@gmail.com",
+    "location": "Chengdu, China"
   },
-
   "social": {
-    "github": "https://github.com/H-Freax/TermHub",
-    "linkedin": "",
+    "github": "https://github.com/SowingG2333",
+    "linkedin": "https://www.linkedin.com/in/donghang-duan-344a74379",
     "medium": "",
-    "googleScholar": "",
+    "googleScholar": "https://scholar.google.com/citations?user=gOWELg8AAAAJ",
     "twitter": "",
     "youtube": "",
     "bilibili": "",
-    "zhihu": "",
+    "zhihu": "https://www.zhihu.com/people/samura1-43",
     "csdn": "",
-    "blog": ""
+    "blog": "https://sowingg.space/"
   },
-
-  "pets": [
-    {
-      "name": "Lucas (Lulu)",
-      "emoji": "🐱",
-      "image": "/images/lulu.jpg",
-      "title": "Best Buddy & Little Brother",
-      "description": "Cookie's Ragdoll cat brother. They nap together, chase each other around the house, and share the sunny spot by the window."
-    }
-  ],
-
+  "pets": [],
   "features": {
     "publications": true,
     "projects": true,
-    "articles": true,
+    "articles": false,
     "experience": true,
     "news": true,
-    "pets": true,
-    "guide": true
+    "pets": false,
+    "guide": false
   },
-
   "heroSocialIcons": [
-    { "platform": "twitter", "icon": "SiX", "label": "X", "color": "#000" },
-    { "platform": "youtube", "icon": "FaYoutube", "label": "YouTube", "color": "#FF0000" }
+    {
+      "platform": "github",
+      "icon": "FaGithub",
+      "label": "GitHub",
+      "color": "#333"
+    },
+    {
+      "platform": "linkedin",
+      "icon": "FaLinkedin",
+      "label": "LinkedIn",
+      "color": "#0A66C2"
+    },
+    {
+      "platform": "googleScholar",
+      "icon": "SiGooglescholar",
+      "label": "Google Scholar",
+      "color": "#4285F4"
+    },
+    {
+      "platform": "zhihu",
+      "icon": "SiZhihu",
+      "label": "Zhihu",
+      "color": "#1677FF"
+    },
+    {
+      "platform": "blog",
+      "icon": "FaGlobe",
+      "label": "Blog",
+      "color": "#2F855A"
+    }
   ],
-
-  "selectedPublicationIds": ["napcon2025-cuddle-optimization", "fetchml2024-warmth-seeking", "arxiv2025-cross-species-play"]
+  "selectedPublicationIds": [
+    "ipccc2025-free-rider-elimination",
+    "arxiv2025-rlaa-anonymization"
+  ]
 }

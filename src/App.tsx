@@ -6,10 +6,9 @@ import './styles/globals.css'
 import './i18n'
 
 function App() {
-  const features = siteConfig.features as Record<string, boolean>
-  const cfg = siteConfig as Record<string, unknown>
-  const template = getTemplate(cfg.template as string | undefined)
-  const slots = getResolvedSlots(template, cfg.components as Record<string, string> | undefined)
+  const features = siteConfig.features
+  const template = getTemplate(siteConfig.template)
+  const slots = getResolvedSlots(template, siteConfig.components)
 
   const { layout: TemplateLayout, pages, theme } = template
 
